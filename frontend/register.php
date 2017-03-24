@@ -81,34 +81,57 @@
 							<hr>							
 
 <?php 
+require 'includes/mysqli_connect.php';
 if ($_SERVER['REQUEST_METHOD']=='POST'){
 	$errors=array();
 	
-	if (empty($_POST['uname'])){
-		$errors[]='You did not enter your username.';
-	}else{
 	$uname=trim($_POST['uname']);
+	$stripped=mysqli_real_escape_string($dbcon,strip_tags($uname));
+	$strlen=mb_strlen($stripped,'utf-8');
+	if($strlen<1)
+	{
+		$errors[]='you forgot to enter your first name.';
+	}else{
+		$uname=$stripped;
 	}
 	
-	if (empty($_POST['email'])){
-		$errors[]='You did not enter your Email Address.';
+	$email=false;
+	if(empty($_POST['email'])){
+		$errrors[]="You forgot to enter the Email Address";
+	}
+	if(filter_var((trim($_POST['email'])),FILTER_VALIDATE_EMAIL)){
+		$e=mysqli_real_escape_string($dbcon,(trim($_POST['email'])));
 	}else{
-		$email=trim($_POST['email']);
+		$errors[]="your email is not in the correct format";
 	}
 	
-	if (!empty($_POST['psword1'])){
-		if($_POST['psword1']!=$_POST['psword2']){
-		$errors[]='Your Passwords did not match.';
-	}else{
-		$p=trim($_POST['psword1']);
+	if(empty($_POST['psword1'])){
+		$errors[]="please enter a valid password";
 	}
+	if(!preg_match('/^\w{8,12}$/',$_POST['psword1'])){
+		$errors[]="Invalid password,use 8 to 12 characters and no space";
 	}else{
-		$errors[]='You did not enter the Password';
+		$p=$_POST['psword1'];
+	}
+	if($_POST['psword1']==$_POST['psword2']){
+		$p=mysqli_real_escape_string($dbcon,trim($p));
+	}else{
+		$errors[]="Your passwords do not match";
+	}
+	
+	$url=trim($_POST['$imgurl']);
+	$stripped=mysqli_real_escape_string($dbcon,strip_tags($url));
+	$strlen=mb_strlen($stripped,'utf-8');
+	if($strlen<1)
+	{
+		$errors[]='you forgot to enter the URL of your profile picture.';
+	}else{
+		$url=$stripped;
 	}
 	
 	if (empty($errors)){
-		require 'includes/mysqli_connect.php';
-		$q="insert into user(id,username,email,password,created_at) values(' ','$uname','$email',SHA1('$p'),NOW() )";
+		$role=2;
+		$q="insert into user(id,username,email,password,role,profile_image,created_at) values(' ','$uname','$email',SHA1('$p'),$role,$url,NOW() )";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){
 			echo'<div class="top-margin"><h2>Registered Successfully</h2>
