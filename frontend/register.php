@@ -112,14 +112,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 		$errors[]="Invalid password,use 8 to 12 characters and no space";
 	}else{
 		$p=$_POST['psword1'];
-	}
+	
 	if($_POST['psword1']==$_POST['psword2']){
 		$p=mysqli_real_escape_string($dbcon,trim($p));
 	}else{
 		$errors[]="Your passwords do not match";
 	}
-	
-	$url=trim($_POST['$imgurl']);
+	}
+	$url=trim($_POST['imgurl']);
 	$stripped=mysqli_real_escape_string($dbcon,strip_tags($url));
 	$strlen=mb_strlen($stripped,'utf-8');
 	if($strlen<1)
@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	
 	if (empty($errors)){
 		$role=2;
-		$q="insert into user(id,username,email,password,role,profile_image,created_at) values(' ','$uname','$email',SHA1('$p'),$role,$url,NOW() )";
+		$q="insert into user(id,username,email,password,role,profile_image,created_at) values(' ','$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){
 			echo'<div class="top-margin"><h2>Registered Successfully</h2>
