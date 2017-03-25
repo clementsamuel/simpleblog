@@ -31,7 +31,7 @@
 					<div class="col-md-6 widget">
 						<h3 class="widget-title">Text widget</h3>
 						<div class="widget-body">
-							<p>the simple blog</p>
+							<p>The simple blogging system.</p>
 							<p>A blog is a discussion or informational website published on the World Wide Web consisting of discrete, often informal diary-style text entries posts. Posts are typically displayed in reverse chronological order, so that the most recent post appears first, at the top of the web page..</p>
 						</div>
 					</div>
