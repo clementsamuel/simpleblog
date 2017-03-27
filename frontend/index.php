@@ -44,7 +44,7 @@ session_start();
 					<li><a href="index.php">Home</a></li>
 					<li class="active"><a href="about.html">About</a></li>
 					<li><a href="contact.html">Contact</a></li>
-					<li><a class="btn" href="index.php"><?php if (isset($_SESSION['id'])){ echo $_SESSION['username'];}else{ echo'SIGN IN / SIGN UP';}?></a></li>
+					<li><a class="btn" href="logout.php"><?php if (isset($_SESSION['id'])){ echo $_SESSION['username'];}else{ echo'SIGN IN / SIGN UP';}?></a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
