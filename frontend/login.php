@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	if($e && $p){
 		$q="select id, username, role from user where (email='$e' && password=SHA1('$p'))";
 		$result=mysqli_query($dbcon,$q);
-		if(@mysqli_num_rows($result)==1){
+		if(mysqli_num_rows($result) == 1){
 			session_start();
 			$_SESSION=mysqli_fetch_array($result,MYSQLI_ASSOC);
 			$_SESSION['role']=(int)$_SESSION['role'];

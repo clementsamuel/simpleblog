@@ -51,7 +51,7 @@
 								<a href="about.html">About</a> |
 								<a href="sidebar-right.html">Sidebar</a> |
 								<a href="contact.html">Contact</a> |
-								<b><a href="signup.html">Sign up</a></b>
+								<b><a href="register.php">Sign up</a></b>
 							</p>
 						</div>
 					</div>
