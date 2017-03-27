@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,11 +62,28 @@
 						echo'<p>'.$row["date"].'</p>';
 						//echo'<p><a href="page.php?id='.$row["id"].'">Read more here...</a></p>';
 					}
+					echo'<h4>Comments</h4>';
+			$q='select id,comment,DATE_FORMAT(created_at,"%e %M %Y") as date from comment where post_id='.$id.'limit 3';
+			if(mysqli_num_rows($result) == 1){
+			while	($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+				echo'<h3>'.$row["title"].'</h3>';
+				echo'<p>'.$row["content"].'</p>';
+				echo'<p>'.$row["date"].'</p>';}
+				}
+            
+			
+					?>
+					
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+					<div class="panel panel-default">
+						<div class="panel-body">
+			<form method="post" id="form1">
+			<textarea name="comment" form="form1" rows="4" cols="50" >Comments</textarea>
+			</div></div></div>;				
 				
 				
 				
-				
-		gate:		?>
+	<?php 	gate:		?>
 			</article>
 			<!-- /Article -->
 		</div>

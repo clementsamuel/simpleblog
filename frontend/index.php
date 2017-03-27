@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,7 @@ session_start();
 
 	?>
 	<!-- Fixed navbar -->
-	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
+	<div class="navbar navbar-inverse navbar-fixed-top headroom" 
 		<div class="container">
 			<div class="navbar-header">
 				<!-- Button for smallest screens -->
@@ -41,10 +40,11 @@ session_start();
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
-					<li><a href="index.php">Home</a></li>
-					<li class="active"><a href="about.html">About</a></li>
+					<li class="active"><a href="index.php">Home</a></li>
+					<li><a href="about.html">About</a></li>
 					<li><a href="contact.html">Contact</a></li>
-					<li><a class="btn" href="logout.php"><?php if (isset($_SESSION['id'])){ echo $_SESSION['username'];}else{ echo'SIGN IN / SIGN UP';}?></a></li>
+					<li><a href="<?php if (isset($_SESSION['id'])){echo'logout.php';}else{echo'login.php';}?>"><?php if(isset($_SESSION['id'])){echo $_SESSION['username'];}else{echo'Login';}?></a></li>
+
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
@@ -89,6 +89,21 @@ session_start();
 				?>
 			</article>
 			<!-- /Article -->
+						<!-- Sidebar -->
+			<aside class="col-sm-4 sidebar sidebar-right">
+                  <?php 
+					if (isset($_SESSION['id'])){
+						echo'<div class="widget">
+					<h4>What you can do?</h4>
+					<ul class="list-unstyled list-spaces">
+					<li><a href="add_page.php">Create a new Blog</a></li>';}?>
+					</ul>
+				</div>
+
+			</aside>
+			<!-- /Sidebar -->
+			
+			
 		</div>
 	</div>	<!-- /container -->
 	
