@@ -90,9 +90,19 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 		$errors[]="Your passwords do not match";
 	}
 	}
-	$url=trim($_POST['imgurl']);
-	$stripped=mysqli_real_escape_string($dbcon,strip_tags($url));
-	$strlen=mb_strlen($stripped,'utf-8');
+	$url = $_FILES['file']['tmp_name'];
+	if (file_exists($url))
+	{
+		$imagesizedata = getimagesize($url);
+		if ($imagesizedata === FALSE)
+		{
+		$errors[]="Not an image file";
+		}
+	}
+	else
+	{
+		$errors[]="You did not upload the profile picture";
+	}
 	if($strlen<1)
 	{
 		$errors[]='you forgot to enter the URL of your profile picture.';
@@ -118,14 +128,15 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	}
 	else{
 		echo'<div class="top-margin"><h2>Error!</h2>
-				<p class="error">The Foolowing error has occured:<br>';
+				<p class="text-danger">The Following error has occured:<br>';
 				foreach ($errors as $msg){
-					echo"-$msg<br>\n</div>";
+					echo"-$msg<br>\n";
 				}
+				echo '</div></p><h3>Please Try again</h3>';
 	}
 }
 ?>
-							<form action="register.php" method="post">
+							<form action="register.php" method="post" enctype="multipart/form-data">
 								<div class="top-margin">
 									<label>User Name</label>
 									<input type="text" class="form-control" name="uname">
@@ -147,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 								</div>
 								<div class="top margin">
 									<label>Profile Picture</label>
-									<input type="text" class="form-control" name="imgurl">
+									<input type="file" class="form-control" name="imgurl">
 								</div>
 
 								<hr>

@@ -50,7 +50,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Sign in to your account</h3>
-							<p class="text-center text-muted">If you are a new user then,<a href="signup.html">Register</a> and try to login.</p>
+							<p class="text-center text-muted">If you are a new user then,<a href="register.php">Register</a> and try to login.</p>
 							<hr>
 							
 <?php 
