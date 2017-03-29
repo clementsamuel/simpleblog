@@ -139,11 +139,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 							<form action="register.php" method="post" enctype="multipart/form-data">
 								<div class="top-margin">
 									<label>User Name</label>
-									<input type="text" class="form-control" name="uname">
+									<input type="text" class="form-control" name="uname" value-"<?php if (isset($_POST['uname'])) echo $_POST['uname'];?>">
 								</div>
 								<div class="top-margin">
 									<label>Email Address <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="email">
+									<input type="text" class="form-control" name="email"  value-"<?php if (isset($_POST['email'])) echo $_POST['email'];?>
 								</div>
 
 								<div class="row top-margin">
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 								</div>
 								<div class="top margin">
 									<label>Profile Picture</label>
-									<input type="file" class="form-control" name="imgurl">
+									<input type="file" class="form-control" name="imgurl"  value-"<?php if (isset($_POST['imgurl'])) echo $_POST['imgurl'];?>
 								</div>
 
 								<hr>
