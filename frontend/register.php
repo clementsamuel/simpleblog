@@ -14,6 +14,8 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 
+	<script type="text/javascript" src="js/validation.js"></script>
+
 	<!-- Custom styles for our template -->
 	<link rel="stylesheet" href="css/bootstrap-theme.css" media="screen" >
 	<link rel="stylesheet" href="css/main.css">
@@ -51,8 +53,7 @@
 							<p class="text-center text-muted">If already a user, Please <a href="login.php">Login</a>.</p>
 							<hr>							
 
-<?php 
-require 'includes/mysqli_connect.php';
+<?php require 'includes/mysqli_connect.php';
 if ($_SERVER['REQUEST_METHOD']=='POST'){
 	$errors=array();
 	
@@ -96,16 +97,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	if(isset($name)){
 		if(!empty($name)){
 			$location="images/";
-			if(move_uploaded_file($tmp_name,$location.$name)){
+			$allowed=array("imagepjepg","image/jpeg","image/png","image/gif","image/x-png","image/jpg");
+			if(in_array($_FILES['imgurl']['type'],$allowed)){
+				if(move_uploaded_file($tmp_name,$location.$name)){
 			  // echo'uploaded successfully';
 			}else{
 				echo"file not uploaded";
 		}
+			}else{
+				echo'<p class="text-danger">Not an image file</p>';
+			}
 		}else{
-			echo"file empty";
+			echo'<p class="text-danger">file empty</p>';
 		}
 		}else{
-			echo'file not choosen';
+			echo'<p class="text-danger">file not choosen</p>';
 		}
 	
 	
@@ -114,20 +120,21 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	if (empty($errors)){
 		$role=2;
 		$url='images/'.$name;
-		$q="insert into user(username,email,password,role,profile_image,created_at) values('$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
+		$q="insert into user(username,email,password,role,profile_image,created_at,updated_at) values('$uname','$e',SHA1('$p'),'$role','$url',NOW(),NOW())";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){
 			echo'<div class="top-margin"><h2>Registered Successfully</h2>
-			<h2>Thank You</h2></div>.';
+			<h2>Thank You</h2></div>';
+			//goto gate;
 		}else{
 			echo'<h2>System Error</h2>
-			<p class=""error">You cant be registered due to an system error.</p>';
+			<p class="text-danger">You cant be registered due to an system error.</p>';
 			echo'</p>'.mysqli_error($dbcon).'<br><br>Query:'.$q.'</p>';
 		}
 		mysqli_close($dbcon);
 		include('includes/footer.php');
 		exit();
-	}
+		}
 	else{
 		echo'<div class="top-margin"><h2>Error!</h2>
 				<p class="text-danger">The Following error has occured:<br>';
@@ -138,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	}
 }
 ?>
-							<form action="register.php" method="post" enctype="multipart/form-data">
+							<form action="register.php" method="POST" enctype="multipart/form-data" onsubmit="return checkForm(this);>
 								<div class="top-margin">
 									<label>User Name</label>
 									<input type="text" class="form-control" name="uname" value="<?php if (isset($_POST['uname'])) echo $_POST['uname'];?>">
@@ -168,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 								<div class="row">
 									<div class="col-lg-8">
 										<label class="checkbox">
-											<input type="checkbox"> 
+											<input type="checkbox" name="terms"> 
 											I've read the <a href="page_terms.html">Terms and Conditions</a>
 										</label>                        
 									</div>
@@ -184,7 +191,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 				
 			</article>
 			<!-- /Article -->
-
 		</div>
 	</div>	<!-- /container -->
 	<?php include 'includes/footer.php';?>
