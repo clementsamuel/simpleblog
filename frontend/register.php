@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 								</div>
 								<div class="top margin">
 									<label>Profile Picture</label>
-									<input type="file" class="form-control" name="imgurl"  value="<?php if (isset($_POST['imgurl'])) echo $_POST['imgurl'];?>
+									<input type="file" class="form-control" name="imgurl"  value="<?php if (isset($_POST['imgurl'])) echo $_POST['imgurl'];?>">
 								</div>
 
 								<hr>
