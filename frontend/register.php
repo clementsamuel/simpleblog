@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	
 	if (empty($errors)){
 		$role=2;
-		$url='images/'$name;
+		$url='images/'.$name;
 		$q="insert into user(username,email,password,role,profile_image,created_at) values('$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){
