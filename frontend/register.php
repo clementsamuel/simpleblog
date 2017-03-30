@@ -48,7 +48,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="thin text-center">Registering a new account</h3>
-							<p class="text-center text-muted">If already a user, Please <a href="signin.html">Login</a>.</p>
+							<p class="text-center text-muted">If already a user, Please <a href="login.php">Login</a>.</p>
 							<hr>							
 
 <?php 
@@ -90,28 +90,30 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 		$errors[]="Your passwords do not match";
 	}
 	}
-	$url = $_FILES['file']['tmp_name'];
-	if (file_exists($url))
-	{
-		$imagesizedata = getimagesize($url);
-		if ($imagesizedata === FALSE)
-		{
-		$errors[]="Not an image file";
+	
+	$name=$_FILES['imgurl']['name'];
+	$tmp_name=$_FILES['imgurl']['tmp_name'];
+	if(isset($name)){
+		if(!empty($name)){
+			$location="images/";
+			if(move_uploaded_file($tmp_name,$location.$name)){
+			  // echo'uploaded successfully';
+			}else{
+				echo"file not uploaded";
 		}
-	}
-	else
-	{
-		$errors[]="You did not upload the profile picture";
-	}
-	if($strlen<1)
-	{
-		$errors[]='you forgot to enter the URL of your profile picture.';
-	}else{
-		$url=$stripped;
-	}
+		}else{
+			echo"file empty";
+		}
+		}else{
+			echo'file not choosen';
+		}
+	
+	
+	
 	
 	if (empty($errors)){
 		$role=2;
+		$url="images/.$name";
 		$q="insert into user(id,username,email,password,role,profile_image,created_at) values(' ','$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){

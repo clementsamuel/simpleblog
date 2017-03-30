@@ -88,15 +88,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	}
 	mysqli_close($dbcon);
 }
-?>							
-							
-							
-							
-							
+?>	
 							<form action="login.php" method="post">
 								<div class="top-margin">
 									<label>Email ID <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="email">
+									<input type="text" class="form-control" name="email"  value-"<?php if (isset($_POST['email'])) echo $_POST['email'];?>
 								</div>
 								<div class="top-margin">
 									<label>Password <span class="text-danger">*</span></label>
