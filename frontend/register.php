@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 								</div>
 								<div class="top-margin">
 									<label>Email Address <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" name="email"  value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>
+									<input type="text" class="form-control" name="email"  value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>">
 								</div>
 
 								<div class="row top-margin">
