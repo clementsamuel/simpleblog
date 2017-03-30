@@ -113,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	
 	if (empty($errors)){
 		$role=2;
-		$url="images/.$name";
-		$q="insert into user(id,username,email,password,role,profile_image,created_at) values(' ','$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
+		$url='images/'$name;
+		$q="insert into user(username,email,password,role,profile_image,created_at) values('$uname','$e',SHA1('$p'),'$role','$url',NOW() )";
 		$result=@mysqli_query($dbcon,$q);
 		if($result){
 			echo'<div class="top-margin"><h2>Registered Successfully</h2>
