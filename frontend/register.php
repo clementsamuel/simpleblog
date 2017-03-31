@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	}
 }
 ?>
-							<form action="register.php" method="POST" enctype="multipart/form-data" onsubmit="return checkForm(this);>
+							<form action="register.php" name="myForm" method="POST" enctype="multipart/form-data" onsubmit="return checkForm();>
 								<div class="top-margin">
 									<label>User Name</label>
 									<input type="text" class="form-control" name="uname" value="<?php if (isset($_POST['uname'])) echo $_POST['uname'];?>">

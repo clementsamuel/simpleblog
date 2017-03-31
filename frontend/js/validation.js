@@ -1,14 +1,44 @@
 <script type="text/javascript">
 
-  function checkForm(form)
-  {
-    ...
-    if(!form.terms.checked) {
-      alert("Please indicate that you accept the Terms and Conditions");
-      form.terms.focus();
-      return false;
-    }
-    return true;
-  }
+function checkForm(form){
+  
+
+var x = document.forms["myForm"]["uname"].value;
+if (x==null || x=="") {
+    alert("Name must be filled out");
+    return false;
+}
+
+var x = document.forms["myForm"]["email"].value;
+if (x==null || x=="") {
+    alert("Email must be filled out");
+    return false;
+}
+
+var x = document.forms["myForm"]["psword`"].value;
+if (x==null || x=="") {
+    alert("password must be filled out");
+    return false;
+}
+
+var x = document.forms["myForm"]["psword2"].value;
+if (x==null || x=="") {
+    alert("Confirm your password");
+    return false;
+}
+
+var x = document.forms["myForm"]["imgurl"].value;
+if (x==null || x=="") {
+    alert("upload your profile picture");
+    return false;
+}
+
+var x=document.forms["myForm"]["terms"].checked;
+if (x === false) {
+    alert("You forgot to agree to the terms and Conditions");
+    return false;
+}
+  
+}
 
 </script>
