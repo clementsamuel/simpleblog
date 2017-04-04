@@ -145,10 +145,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	}
 }
 ?>
-							<form action="register.php" name="myForm" method="POST" enctype="multipart/form-data" onsubmit="return checkForm();>
+							<form action="register.php" id="myForm" method="POST" enctype="multipart/form-data" onsubmit="return checkForm()";>
 								<div class="top-margin">
 									<label>User Name</label>
-									<input type="text" class="form-control" name="uname" value="<?php if (isset($_POST['uname'])) echo $_POST['uname'];?>">
+									<input type="text" class="form-control"  name="uname" value="<?php if (isset($_POST['uname'])) echo $_POST['uname'];?>">
 								</div>
 								<div class="top-margin">
 									<label>Email Address <span class="text-danger">*</span></label>

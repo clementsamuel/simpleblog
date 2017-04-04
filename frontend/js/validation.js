@@ -1,6 +1,5 @@
-<script type="text/javascript">
-
-function checkForm(form){
+//alert("validaton working!");
+function checkForm(){
   
 
 var x = document.forms["myForm"]["uname"].value;
@@ -15,7 +14,7 @@ if (x==null || x=="") {
     return false;
 }
 
-var x = document.forms["myForm"]["psword`"].value;
+var x = document.forms["myForm"]["psword1"].value;
 if (x==null || x=="") {
     alert("password must be filled out");
     return false;
@@ -41,4 +40,3 @@ if (x === false) {
   
 }
 
-</script>

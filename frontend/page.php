@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,26 +61,53 @@
 						echo'<h3>'.$row["title"].'</h3>';
 						echo'<p>'.$row["content"].'</p>';
 						echo'<p>'.$row["date"].'</p>';
-						//echo'<p><a href="page.php?id='.$row["id"].'">Read more here...</a></p>';
-					}
-					echo'<h4>Comments</h4>';
-			$q='select id,comment,DATE_FORMAT(created_at,"%e %M %Y") as date from comment where post_id='.$id.'limit 3';
+						}
+//comment display		
+				echo'<div class="panel panel-default">
+					<div class="panel-body">';
+			$q='select id,comment,DATE_FORMAT(created_at,"%e %M %Y") as date from comment where post_id='.$id.' order by date limit 3';
 			if(mysqli_num_rows($result) == 1){
 			while	($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-				echo'<h3>'.$row["title"].'</h3>';
-				echo'<p>'.$row["content"].'</p>';
+				//echo'<h3>'.$row["title"].'</h3>';
+				echo'<p>'.$row["comment"].'</p>';
 				echo'<p>'.$row["date"].'</p>';}
 				}
-            
+//comment insert	
 			
+			$userid=$_SESSION['id'];	
+			$postid=$_GET['id'];
+			if (isset($_POST['comment'])){
+			$comm=$_POST['comment'];
+			}
+			$q="select user_id,post_id,parent_id,comment from comment where post_id='$postid' ";
+			$result=mysqli_query($dbcon,$result);
+			if(mysqli_num_rows($result)>0){
+				$pid=NULL;
+			}else{
+				$pid=mysqli_num_rows($result);
+			}
+			
+            $q="insert into comment(user_id,post_id,parent_id,comment,created_at,updated_at) values('$userid','$postid','$pid','$comm',NOW(),NOW())";	
+            $result=mysqli_query($dbcon,$q);
+            if(!$result){
+			echo'<h2>System Error</h2>
+			<p class="text-danger">You cant be registered due to an system error.</p>';
+			echo'</p>'.mysqli_error($dbcon).'<br><br>Query:'.$q.'</p>';
+		}
 					?>
-					
-<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-					<div class="panel panel-default">
-						<div class="panel-body">
-			<form method="post" id="form1">
-			<textarea name="comment" form="form1" rows="4" cols="50" >Comments</textarea>
-			</div></div></div>;				
+						<h4>comments</h4>
+			<form method="post" id="form1" >
+			<div class="row top-margin">
+		    <div class="col-sm-6">
+				<input type="text" class="form-control" name="comment"   required>
+			</div>
+			</div>
+			<hr>
+			<div class="col-lg-4 text-right">
+				<button class="btn btn-action" type="submit">comment</button>
+			</div>
+			</form>
+			</div></div>			
 				
 				
 				
