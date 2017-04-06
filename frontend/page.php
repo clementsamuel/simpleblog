@@ -35,7 +35,7 @@
 	<div class="container">
 
 		<ol class="breadcrumb">
-			<li><a href="index.html">Home</a></li>
+			<li><a href="index.php">Home</a></li>
 			<li class="active">About</li>
 		</ol>
 
@@ -52,7 +52,7 @@
 				$id=$_GET['id'];	
 				}else{
 					echo'<p clas="text-danger">This pages has been accessed in error.</p>';
-					goto gate;
+				
 				}
 				$q='select id, title, content, DATE_FORMAT(created_at,"%e %M %Y") as date from post where id='.$id.' limit 1';
 				$result=mysqli_query($dbcon,$q);
@@ -62,56 +62,7 @@
 						echo'<p>'.$row["content"].'</p>';
 						echo'<p>'.$row["date"].'</p>';
 						}
-//comment display		
-				echo'<div class="panel panel-default">
-					<div class="panel-body">';
-			$q='select id,comment,DATE_FORMAT(created_at,"%e %M %Y") as date from comment where post_id='.$id.' order by date limit 3';
-			if(mysqli_num_rows($result) == 1){
-			while	($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-				//echo'<h3>'.$row["title"].'</h3>';
-				echo'<p>'.$row["comment"].'</p>';
-				echo'<p>'.$row["date"].'</p>';}
-				}
-//comment insert	
-			
-			$userid=$_SESSION['id'];	
-			$postid=$_GET['id'];
-			if (isset($_POST['comment'])){
-			$comm=$_POST['comment'];
-			}
-			$q="select user_id,post_id,parent_id,comment from comment where post_id='$postid' ";
-			$result=mysqli_query($dbcon,$result);
-			if(mysqli_num_rows($result)>0){
-				$pid=NULL;
-			}else{
-				$pid=mysqli_num_rows($result);
-			}
-			
-            $q="insert into comment(user_id,post_id,parent_id,comment,created_at,updated_at) values('$userid','$postid','$pid','$comm',NOW(),NOW())";	
-            $result=mysqli_query($dbcon,$q);
-            if(!$result){
-			echo'<h2>System Error</h2>
-			<p class="text-danger">You cant be registered due to an system error.</p>';
-			echo'</p>'.mysqli_error($dbcon).'<br><br>Query:'.$q.'</p>';
-		}
-					?>
-						<h4>comments</h4>
-			<form method="post" id="form1" >
-			<div class="row top-margin">
-		    <div class="col-sm-6">
-				<input type="text" class="form-control" name="comment"   required>
-			</div>
-			</div>
-			<hr>
-			<div class="col-lg-4 text-right">
-				<button class="btn btn-action" type="submit">comment</button>
-			</div>
-			</form>
-			</div></div>			
-				
-				
-				
-	<?php 	gate:		?>
+						?>	
 			</article>
 			<!-- /Article -->
 		</div>

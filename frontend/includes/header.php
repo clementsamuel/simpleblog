@@ -18,7 +18,7 @@
 						</ul>
 					</li>-->
 					<li><a href="contact.php">Contact</a></li>
-					<li class="active"><a class="btn" href="login.php">SIGN IN / SIGN UP</a></li>
+					<li class="active"><a class="btn" href="<?php if (isset($_SESSION['id'])){echo'logout.php';}else{echo'login.php';}?>"><?php if(isset($_SESSION['id'])){echo $_SESSION['username'];}else{echo'Login';}?></a></li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
