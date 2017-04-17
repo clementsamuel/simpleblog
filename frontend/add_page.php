@@ -20,6 +20,8 @@ if (!isset($_SESSION['id']))
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 
+	<script type="text/javascript" src="js/validation1.js"></script>
+	
 	<!-- Custom styles for our template -->
 	<link rel="stylesheet" href="css/bootstrap-theme.css" media="screen" >
 	<link rel="stylesheet" href="css/main.css">
@@ -61,30 +63,43 @@ if (!isset($_SESSION['id']))
 if($_SERVER['REQUEST_METHOD']=='POST'){
 	$errors=array();
 	if (empty($_POST['title'])){
-		$title="untitled";
+		$errors[]="page is untitled";
 	}else{
 		$title=$_POST['title'];
 	}
-	$url=trim($_POST['img']);
-	$stripped=mysqli_real_escape_string($dbcon,strip_tags($url));
-	$strlen=mb_strlen($stripped,'utf-8');
-	if($strlen<1)
-	{
-		$errors[]='you forgot to enter the URL of your blog picture.';
+	$name=$_FILES['imgurl']['name'];
+	$tmp_name=$_FILES['imgurl']['tmp_name'];
+	if(isset($name)){
+		if(!empty($name)){
+			$location="images/";
+			$allowed=array("imagepjepg","image/jpeg","image/png","image/gif","image/x-png","image/jpg");
+			if(in_array($_FILES['imgurl']['type'],$allowed)){
+				if(move_uploaded_file($tmp_name,$location.$name)){
+					// echo'uploaded successfully';
+				}else{
+					$errors[]="file not uploaded";
+				}
+			}else{
+				$errors[]='Not an image file';
+			}
+		}else{
+			$errors[]='file empty';
+		}
 	}else{
-		$url=$stripped;
+		$errors[]='file not choosen';
 	}
 	$content=trim($_POST['content']);
 	$stripped=mysqli_real_escape_string($dbcon,strip_tags($content));
 	$strlen=mb_strlen($stripped,'utf-8');
 	if($strlen<1)
 	{
-		$errors[]='you forgot to enter the URL of your profile picture.';
+		$errors[]='you forgot to enter the contents.';
 	}else{
 		$content=$stripped;
 	}
 	if (empty($errors)){
 		$userid=$_SESSION['id'];
+		$url='images/'.$name;
 		$q="insert into post(id,user_id,title,content,blog_image,created_at) values(' ','$userid','$title','$content','$url',NOW() )";
 		$result=mysqli_query($dbcon,$q);
 		if($result){
@@ -103,23 +118,23 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 			echo'<div class="top-margin"><h2>Error!</h2>
 				<p class="error">The Foolowing error has occured:<br>';
 			foreach ($errors as $msg){
-				echo"-$msg<br>\n</div>";
-			}
+				echo"-$msg<br>\n";
+			}echo '</div>';
 		}
 }
 ?>
-							<form action="add_page.php" method="post" id="form1">
+							<form action="add_page.php" method="post" id="myForm" enctype="multipart/form-data" onsubmit= "return checkForm()";>
 								<div class="top-margin">
 									<label>Title</label>
-									<input type="text" class="form-control" name="title">
+									<input type="text" class="form-control" name="title"  value="<?php if (isset($_POST['title'])) echo $_POST['title'];?>" require>
 								</div>
 								<div class="top-margin">
 									<label>Content</label>
-									<textarea name="content" form="form1"  rows="4" cols="50" class="form-control" name="content">contents..</textarea>
+									<textarea name="content" form="form1"  rows="4" cols="50" class="form-control" name="content" require></textarea>
 								</div>
 								<div class="top-margin">
 									<label>Blog Image</label>
-									<input type="text" class="form-control" name="img">
+									<input type="file" class="form-control" name="imgurl">
 								</div>
 
 								

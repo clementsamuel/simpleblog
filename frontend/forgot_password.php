@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +13,16 @@
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+	
+	<script type="text/javascript">
+	function checkForm(){
+	var x = document.forms["myForm"]["email"].value;
+	if (x==null || x=="") {
+	    alert("Enter the registered email address");
+	    return false;
+	}
+	}
+	</script>
 
 	<!-- Custom styles for our template -->
 	<link rel="stylesheet" href="css/bootstrap-theme.css" media="screen" >
@@ -106,7 +115,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 ?>
 
 							
-							<form action="forgot_password.php" method="post">
+							<form action="forgot_password.php" method="post" id="myForm" onsubmit="return checkForm()";>
 								<div class="top-margin">
 									<label>Email <span class="text-danger">*</span></label>
 									<input type="text" class="form-control" name="email">

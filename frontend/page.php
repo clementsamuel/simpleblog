@@ -7,7 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
 	
-	<title>About - Progressus Bootstrap template</title>
+	<title>Page</title>
 
 	<link rel="shortcut icon" href="images/gt_favicon.png">
 	
@@ -27,10 +27,12 @@
 </head>
 
 <body>
-<?php include 'includes/header.php'; ?>
+<?php 
+include 'includes/header.php';
+?>
 
 	<header id="head" class="secondary"></header>
-
+s
 	<!-- container -->
 	<div class="container">
 
@@ -50,10 +52,8 @@
 				require 'includes/mysqli_connect.php';
 				if (isset($_GET['id']) && is_numeric($_GET['id'])){
 				$id=$_GET['id'];	
-				}else{
-					echo'<p clas="text-danger">This pages has been accessed in error.</p>';
 				
-				}
+//the post
 				$q='select id, title, content, DATE_FORMAT(created_at,"%e %M %Y") as date from post where id='.$id.' limit 1';
 				$result=mysqli_query($dbcon,$q);
 				if(mysqli_num_rows($result) == 1){
@@ -62,8 +62,57 @@
 						echo'<p>'.$row["content"].'</p>';
 						echo'<p>'.$row["date"].'</p>';
 						}
-						?>	
+           				}
+							
+						
+//the comment
+							 //session_start();
+							 //require 'includes/mysqli_connect.php';
+           		echo'		<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+           				<div class="panel panel-default">
+           				<div class="panel-body">
+						<label>Comments</label>';
+							 if (isset($_POST['id']) && is_numeric($_POST['id'])){
+							 $id=$_POST['id'];}
+							 $q='select user_id,comment from comment where post_id='.$id.' order by created_at';
+							 $result=mysqli_query($dbcon,$q);
+							 if(mysqli_num_rows($result) == 1){
+							 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+							 	echo'<p>'.$row["user_id"].'-->'.$row["comment"].'</p>';
+							 }
+							 
+							 if(isset($_POST['comments'])){
+							 	$uid=$_SESSION['id'];
+							 	$comm=$_POST['comments'];
+							 	$q="select * from comment where post_id=$id";
+							 	$result=mysqli_query($dbcon,$q);
+							 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+							 	if(mysqli_num_rows($result)<0){
+							 		$pid=0;
+							 	}else{
+							 		$pid=mysqli_num_rows($result);	}
+							 		$q="insert into comment(user_id,post_id,parent_id,comment,created_at,updated_at) values('$uid','$id','$pid','$comm',NOW(),NOW())";
+							 }
+							 ?>
+								
+                                <form action="page.php" id="myForm" method="POST">
+								<div class="top-margin">
+									<input type="text" class="form-control"  name="comments" placeholder="comment here">
+									<input type="hidden" name="id" value="<?php echo $id;?>">
+								</div>
+								<hr>
+								<div class="col-lg-4 text-right">
+										<button class="btn btn-action" type="submit">Comment</button>
+								</div>
+								</form>
+								</div>
+								</div>
+								</div>
+
+				
+							
 			</article>
+			
 			<!-- /Article -->
 		</div>
 	</div>	<!-- /container -->

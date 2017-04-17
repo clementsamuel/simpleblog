@@ -13,6 +13,8 @@
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/font-awesome.min.css">
+	
+	<script type="text/javascript" src="js/validationlogin.js"></script>
 
 	<!-- Custom styles for our template -->
 	<link rel="stylesheet" href="ss/bootstrap-theme.css" media="screen" >
@@ -89,7 +91,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 	mysqli_close($dbcon);
 }
 ?>	
-							<form action="login.php" method="post">
+							<form action="login.php" method="post" id="myForm" onsubmit="return checkForm()";>
 								<div class="top-margin">
 									<label>Email ID <span class="text-danger">*</span></label>
 									<input type="text" class="form-control" name="email"  value-"<?php if (isset($_POST['email'])) echo $_POST['email'];?>
