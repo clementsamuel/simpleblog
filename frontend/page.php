@@ -32,7 +32,7 @@ include 'includes/header.php';
 ?>
 
 	<header id="head" class="secondary"></header>
-s
+
 	<!-- container -->
 	<div class="container">
 
@@ -82,15 +82,21 @@ s
 							 }
 							 
 							 if(isset($_POST['comments'])){
+							 	if (isset($_SESSION['id'])){
 							 	$uid=$_SESSION['id'];
-							 	$comm=$_POST['comments'];
-							 	$q="select * from comment where post_id=$id";
-							 	$result=mysqli_query($dbcon,$q);
-							 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-							 	if(mysqli_num_rows($result)<0){
-							 		$pid=0;
 							 	}else{
-							 		$pid=mysqli_num_rows($result);	}
+							 		$uid=NULL;
+							 	}
+							 	$comm=$_POST['comments'];
+							 	$q="select * from comment where post_id='$id'";
+							 	$qu="select id from comment where post_id='$id' and parent_id IS NULL";
+							 	$res=mysqli_query($dbcon,$qu);
+							 	$result=mysqli_query($dbcon,$q);
+							 	$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
+							 	if(mysqli_num_rows($result)<0){
+							 		$pid=NULL;
+							 	}else{
+							 		$pid=$row['id'];	}
 							 		$q="insert into comment(user_id,post_id,parent_id,comment,created_at,updated_at) values('$uid','$id','$pid','$comm',NOW(),NOW())";
 							 }
 							 ?>
